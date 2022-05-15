@@ -1,0 +1,26 @@
+Not: Yazılacak komutlar windows komutlarıdır.Linux/Mac için ayrıca bakınız.
+
+1-"python --version" komutu ile pyton yüklü olup olmadığını,versiyonunun kontrolünü yapabiliriz.
+
+2-"python -m venv env" komutu ile virtual envairment oluşturuyoruz.En sondaki "env" envairment adını temsil eder.
+Genel kullanım env şeklindedir.
+
+3-"env\Scripts\activate" komutu ile oluşturduğumuz envairment'i aktif hale getiriyoruz.Aktif olduğunu terminalde komut yazılan dizinin 
+başında (env) şeklinde görebiliriz.
+
+4-"pip freeze"komutu ile envairment içerisinin boş olduğunu kontrol edebiliriz.
+
+5-"pip install django" komutu ile envairment içerisine django yüklüyoruz.Ardından pip freeze ile kontrol edebilir djangonun yüklenmiğini
+kontrol edebiliriz.
+
+6-"django-admin startproject fscohort ."komutu ile projemizi oluşturabiliriz.Sonda yazan "fscohort" proje ismini temsil eder.Projenize uygun
+ismi verebilirsiniz.İsimden sonra "." kullanmamızın sebebi django default olarak projeyi dosya içerisine kuruyor."." ile bunu önleyebiliriz.
+
+7-"python manage.py runserver" komutu ile projemizi browserda açıyoruz."CTRL+C" komutu ile projemizi sonlandırabiliriz.
+
+8-"python manage.py startapp student" komutu ile projemiz içerisinde app'lerimizi oluşturabiliriz."student" app ismidir.Değişik isimler
+kullanılabilir.
+
+Not:
+-Bir proje birden çok App'den oluşabilir.
+-Bir App birden fazla proje'de kullanılabilir.
