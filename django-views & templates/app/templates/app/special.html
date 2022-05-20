@@ -1,0 +1,38 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+</head>
+<h1> This is Special Page !</h1>
+
+{{request.user}}
+<br>
+
+<h2>The Best bootcamp is {{title | title}}</h2> 
+{#2.ci title method olan title()#}
+
+<br>
+
+{{ title }}
+<br>
+{{ dict1.django | upper }}
+
+<br>
+ {% for i in my_list %} 
+    <li>{{i}}</li>
+ {% endfor %}
+
+ <br>
+
+ {# Tek satır comment gösterimi. #}
+ 
+ {% comment %}
+     Birden
+     fazla
+     satırlı comment.
+ {% endcomment %}
+    
+ <!-- html yorumu ile comment -->
+ {# yukarıdaki şekildede yoruma alıyor ekranda gözükmüyor ancak incele dediğimizde gözüküyor. #}
+
+ <img src="{% static 'app/kittin.jpeg' %}" alt="kittin" height="300">
