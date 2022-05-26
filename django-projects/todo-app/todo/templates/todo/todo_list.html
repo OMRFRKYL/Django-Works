@@ -8,7 +8,10 @@
 
 <ul>
 {% for todo in todos  %}
+
+    <a href="{% url 'update' todo.id %}">
 <li>{{todo}}</li>
+    </a>
 
 {% endfor %}
 

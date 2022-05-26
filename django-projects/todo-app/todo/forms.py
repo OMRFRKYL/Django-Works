@@ -1,9 +1,10 @@
-# from django import forms
-# from django.db.models import fields
-# from .models import Todo
+from dataclasses import field
+from django import forms
+from .models import Todo
 
 
-# class TodoForm(forms.ModelForm):
-#     class Meta:
-#         model = Todo
-#         fields = "__all__"
+
+class TodoForm(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = "__all__"
