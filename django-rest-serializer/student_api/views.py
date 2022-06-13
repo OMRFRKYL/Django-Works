@@ -1,3 +1,4 @@
+from functools import partial
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Student,Path
 from .serializers import StudentSerializer,PathSerializer
@@ -36,7 +37,7 @@ def student_api_get_update_delete(request, pk):
             return Response(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'PATCH':
-        serializer = StudentSerializer(student, data=request.data)
+        serializer = StudentSerializer(student, data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
             data = {
@@ -49,7 +50,6 @@ def student_api_get_update_delete(request, pk):
             "message": f"Student {student.last_name} deleted successfully"
         }
         return Response(data)
-
 
 @api_view(['GET', 'POST'])
 def path_api(request):
