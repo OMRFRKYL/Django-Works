@@ -12,6 +12,11 @@ from .serializers import TodoSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 
+from rest_framework import mixins,viewsets
+from rest_framework.generics import GenericAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView
+
+from rest_framework.decorators import action
+
 # Create your views here.
 def home(request):
     return HttpResponse(
@@ -88,44 +93,85 @@ def todoDelete(request, pk):
     
 #! Class Based Views
 
-class TodoList(APIView):
+# class TodoList(APIView):
     
-    def get(self, request):
-        todos = Todo.objects.all()
-        serializer = TodoSerializer(todos, many=True)
-        return Response(serializer.data)
+#     def get(self, request):
+#         todos = Todo.objects.all()
+#         serializer = TodoSerializer(todos, many=True)
+#         return Response(serializer.data)
     
-    def post(self, request):
-        serializer = TodoSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+#     def post(self, request):
+#         serializer = TodoSerializer(data = request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#         return Response(serializer.data)
     
 
-class TodoDetail(APIView):
+# class TodoDetail(APIView):
     
-    def get_obj(self, id):
-        todo = get_object_or_404(Todo, id=id)
+#     def get_obj(self, id):
+#         return get_object_or_404(Todo, id=id)
     
-    def get(self, request, id):
-        todo = self.get_obj(id)
-        serializer = TodoSerializer(todo)
-        return Response(serializer.data)
-    
-    
-    def put(self, request, id):
-        todo =  self.get_obj(id)
-        serializer = TodoSerializer(instance=todo, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def get(self, request, id):
+#         todo = self.get_obj(id)
+#         serializer = TodoSerializer(todo)
+#         return Response(serializer.data)
     
     
-    def delete(self, request, id):
-        todo =  self.get_obj(id)
-        todo.delete()
-        data = {
-            "message" : "Todo successfully deleted"
+#     def put(self, request, id):
+#         todo =  self.get_obj(id)
+#         serializer = TodoSerializer(instance=todo, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+#     def delete(self, request, id):
+#         todo =  self.get_obj(id)
+#         todo.delete()
+#         data = {
+#             "message" : "Todo successfully deleted"
+#         }
+#         return Response(data, status=status.HTTP_204_NO_CONTENT)
+
+#!Generic Apıvıew and mıxıns
+
+# class TodoList(mixins.ListModelMixin,mixins.CreateModelMixin,GenericAPIView):
+#     queryset= Todo.objects.all()
+#     serializer_class =TodoSerializer
+
+#     def get(self,request,*args,**kwargs):
+#         return self.list(request,*args,**kwargs)
+
+#     def post(self,request,*args,**kwargs):
+#         return self.create(request,*args,**kwargs)
+
+
+#!Concrete Views
+
+# class TodoListCreate(ListCreateAPIView):
+#     queryset =Todo.objects.all()
+#     serializer_class=TodoSerializer
+
+# class TodoGetUpdateDelete(RetrieveUpdateDestroyAPIView):
+#     queryset =Todo.objects.all()
+#     serializer_class=TodoSerializer
+#     lookup_field="id"
+
+#!ViewSets
+
+class TodoMVS(viewsets.ModelViewSet):
+    queryset=Todo.objects.all()
+    serializer_class=TodoSerializer
+
+    @action(methods=["GET"], detail=False)
+    def todo_count(self, request):
+        todo_count = Todo.objects.filter(done=False).count()
+        count = {
+            'undo-todos': todo_count
         }
-        return Response(data, status=status.HTTP_204_NO_CONTENT)
+        return Response(count)
+
+
+
